@@ -112,14 +112,7 @@ VALUES (1, 'admin', 'admin123', 1, 1, 1, 1);
 2. Inicia **Laragon** y arranca los servicios **Apache** y **MySQL**.  
 3. Crea una nueva base de datos (por ejemplo `classic_coffee`) desde **phpMyAdmin**.  
 4. Importa el archivo `classic_coffee.sql` incluido en el proyecto.  
-5. Configura los datos de conexión en:  
-   application/config/config.php  
-   Ejemplo:
 
-   define('DB_HOST', 'localhost');
-   define('DB_NAME', 'classic_coffee');
-   define('DB_USER', 'root');
-   define('DB_PASS', '');
 
 6. En el navegador visita:  
    👉 http://classic-coffee.test  
