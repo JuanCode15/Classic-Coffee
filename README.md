@@ -42,18 +42,13 @@ Classic-Coffee/
 
 ---
 
-## 🗄️ Estructura de la Base de Datos
+## 🗄️ Estructura de la Base de Datos y Usuario demo
 
-Este proyecto utiliza una base de datos MySQL con las siguientes tablas:
+Puedes importar la estructura completa desde el siguiente script SQL.  
+Además se incluye un **usuario demo** para login rápido.
 
-- **tiposdocumentos**
-- **roles**
-- **personas**
-- **usuarios**
-- **sugerencias**
-- **reservas**
-
-Puedes importar la estructura completa desde el siguiente script SQL:
+```sql
+-- Tablas
 
 CREATE TABLE tiposdocumentos (
   idTipoDocumento INT AUTO_INCREMENT PRIMARY KEY,
@@ -105,6 +100,24 @@ CREATE TABLE reservas (
   FOREIGN KEY (idUsuario) REFERENCES usuarios(idUsuario)
 );
 
+-- Datos demo para login
+
+-- Tipo de documento
+INSERT INTO tiposdocumentos (idTipoDocumento, Descripcion)
+VALUES (1, 'DNI');
+
+-- Rol administrador
+INSERT INTO roles (idRol, Descripcion, Estado)
+VALUES (1, 'Administrador', 1);
+
+-- Persona asociada al usuario
+INSERT INTO personas (idPersona, Nombres, Apellidos, idTipoDocumento, NumeroDocumento)
+VALUES (1, 'Admin', 'Classic', 1, '00000000');
+
+-- Usuario demo (contraseña en texto plano PARA DEMO: 'admin123')
+INSERT INTO usuarios (idUsuario, Usuario, Clave, idPersona, idRol, Estado, idTipoDocumento)
+VALUES (1, 'admin', 'admin123', 1, 1, 1, 1);
+```
 
 ---
 
