@@ -105,3 +105,23 @@ CREATE TABLE reservas (
   FOREIGN KEY (idUsuario) REFERENCES usuarios(idUsuario)
 );
 
+---
+
+## ⚙️ Instalación y ejecución (Laragon o XAMPP)
+
+### 🔹 Opción 1: Usando **Laragon**
+
+1. Copia la carpeta del proyecto dentro de:
+2. Inicia **Laragon** y arranca los servicios **Apache** y **MySQL**.  
+3. Crea una nueva base de datos (por ejemplo `classic_coffee`) desde **phpMyAdmin**.  
+4. Importa el archivo `classic_coffee.sql` incluido en el proyecto.  
+5. Configura los datos de conexión en: application/config/config.php
+Ejemplo:
+
+```php
+define('DB_HOST', 'localhost');
+define('DB_NAME', 'classic_coffee');
+define('DB_USER', 'root');
+define('DB_PASS', '');
+(o http://localhost/classic-coffee
+ si no tienes dominio automático en Laragon)
