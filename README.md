@@ -29,6 +29,9 @@ Puedes importar la estructura completa desde el siguiente script SQL.
 Además se incluye un **usuario demo** para login rápido.
 
 ```sql
+-- Crear base de datos para el proyecto
+CREATE DATABASE framework;
+
 -- Tablas
 
 CREATE TABLE tiposdocumentos (
@@ -102,43 +105,16 @@ VALUES (1, 'admin', 'admin123', 1, 1, 1, 1);
 
 ---
 
-## ⚙️ Instalación y ejecución (Laragon o XAMPP)
-
-### 🔹 Opción 1: Usando **Laragon**
+## ⚙️ Instalación y ejecución (Laragon )
 
 1. Copia la carpeta del proyecto dentro de:
    C:\laragon\www\
 
 2. Inicia **Laragon** y arranca los servicios **Apache** y **MySQL**.  
-3. Crea una nueva base de datos (por ejemplo `classic_coffee`) desde **phpMyAdmin**.  
-4. Importa el archivo `classic_coffee.sql` incluido en el proyecto.  
 
-
-6. En el navegador visita:  
+3. En el navegador visita:  
    👉 http://classic-coffee.test  
    (o http://localhost/classic-coffee si no tienes dominio automático en Laragon)
-
----
-
-### 🔹 Opción 2: Usando **XAMPP**
-
-1. Copia la carpeta del proyecto dentro de:
-   C:\xampp\htdocs\
-
-2. Inicia **Apache** y **MySQL** desde el panel de XAMPP.  
-3. Crea una base de datos llamada `classic_coffee` en **phpMyAdmin**.  
-4. Importa el script SQL incluido.  
-5. Configura las credenciales de conexión en:  
-   application/config/config.php  
-   Ejemplo:
-
-   define('DB_HOST', 'localhost');
-   define('DB_NAME', 'classic_coffee');
-   define('DB_USER', 'root');
-   define('DB_PASS', '');
-
-6. Abre el proyecto en el navegador:  
-   👉 http://localhost/classic-coffee/public
 
 ---
 
