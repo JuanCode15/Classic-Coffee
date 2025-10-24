@@ -21,26 +21,7 @@ Permite realizar y gestionar reservas, registrar usuarios, recibir sugerencias d
 
 ---
 
-## 🧱 Estructura del Proyecto
 
-Classic-Coffee/
-│
-├── application/
-│   ├── config/       # Configuración general y conexión a la base de datos
-│   ├── controller/   # Controladores PHP
-│   ├── core/         # Clases base del mini framework MVC
-│   ├── model/        # Modelos (consultas SQL)
-│   └── view/         # Vistas (archivos .php con HTML)
-│
-├── public/           # Carpeta pública (inicio del sitio)
-│   ├── css/
-│   ├── js/
-│   ├── img/
-│   └── index.php     # Punto de entrada principal
-│
-└── README.md
-
----
 
 ## 🗄️ Estructura de la Base de Datos y Usuario demo
 
