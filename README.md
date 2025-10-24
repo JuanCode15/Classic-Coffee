@@ -22,20 +22,21 @@ Permite realizar y gestionar reservas, registrar usuarios, recibir sugerencias d
 ---
 
 ## 🧱 Estructura del Proyecto
+
 Classic-Coffee/
 │
 ├── application/
-│ ├── config/ # Configuración general y conexión a la base de datos
-│ ├── controller/ # Controladores PHP
-│ ├── core/ # Clases base del mini framework MVC
-│ ├── model/ # Modelos (consultas SQL)
-│ └── view/ # Vistas (archivos .php con HTML)
+│   ├── config/       # Configuración general y conexión a la base de datos
+│   ├── controller/   # Controladores PHP
+│   ├── core/         # Clases base del mini framework MVC
+│   ├── model/        # Modelos (consultas SQL)
+│   └── view/         # Vistas (archivos .php con HTML)
 │
-├── public/ # Carpeta pública (inicio del sitio)
-│ ├── css/
-│ ├── js/
-│ ├── img/
-│ └── index.php # Punto de entrada principal
+├── public/           # Carpeta pública (inicio del sitio)
+│   ├── css/
+│   ├── js/
+│   ├── img/
+│   └── index.php     # Punto de entrada principal
 │
 └── README.md
 
@@ -54,7 +55,6 @@ Este proyecto utiliza una base de datos MySQL con las siguientes tablas:
 
 Puedes importar la estructura completa desde el siguiente script SQL:
 
-```sql
 CREATE TABLE tiposdocumentos (
   idTipoDocumento INT AUTO_INCREMENT PRIMARY KEY,
   Descripcion VARCHAR(15) DEFAULT NULL
@@ -105,6 +105,7 @@ CREATE TABLE reservas (
   FOREIGN KEY (idUsuario) REFERENCES usuarios(idUsuario)
 );
 
+
 ---
 
 ## ⚙️ Instalación y ejecución (Laragon o XAMPP)
@@ -112,16 +113,56 @@ CREATE TABLE reservas (
 ### 🔹 Opción 1: Usando **Laragon**
 
 1. Copia la carpeta del proyecto dentro de:
+   C:\laragon\www\
+
 2. Inicia **Laragon** y arranca los servicios **Apache** y **MySQL**.  
 3. Crea una nueva base de datos (por ejemplo `classic_coffee`) desde **phpMyAdmin**.  
 4. Importa el archivo `classic_coffee.sql` incluido en el proyecto.  
-5. Configura los datos de conexión en: application/config/config.php
-Ejemplo:
+5. Configura los datos de conexión en:  
+   application/config/config.php  
+   Ejemplo:
 
-```php
-define('DB_HOST', 'localhost');
-define('DB_NAME', 'classic_coffee');
-define('DB_USER', 'root');
-define('DB_PASS', '');
-(o http://localhost/classic-coffee
- si no tienes dominio automático en Laragon)
+   define('DB_HOST', 'localhost');
+   define('DB_NAME', 'classic_coffee');
+   define('DB_USER', 'root');
+   define('DB_PASS', '');
+
+6. En el navegador visita:  
+   👉 http://classic-coffee.test  
+   (o http://localhost/classic-coffee si no tienes dominio automático en Laragon)
+
+---
+
+### 🔹 Opción 2: Usando **XAMPP**
+
+1. Copia la carpeta del proyecto dentro de:
+   C:\xampp\htdocs\
+
+2. Inicia **Apache** y **MySQL** desde el panel de XAMPP.  
+3. Crea una base de datos llamada `classic_coffee` en **phpMyAdmin**.  
+4. Importa el script SQL incluido.  
+5. Configura las credenciales de conexión en:  
+   application/config/config.php  
+   Ejemplo:
+
+   define('DB_HOST', 'localhost');
+   define('DB_NAME', 'classic_coffee');
+   define('DB_USER', 'root');
+   define('DB_PASS', '');
+
+6. Abre el proyecto en el navegador:  
+   👉 http://localhost/classic-coffee/public
+
+---
+
+## 🧰 Tecnologías utilizadas
+
+| Tecnología | Descripción |
+|-------------|-------------|
+| **PHP** | Lenguaje principal del backend, implementando el patrón MVC. |
+| **MySQL** | Sistema de gestión de base de datos relacional. |
+| **HTML5** | Estructura y contenido de las vistas. |
+| **CSS** | Diseño y estilos del sitio. |
+| **JavaScript** | Interactividad y alertas dinámicas (JSAlert). |
+| **Laragon / XAMPP** | Entorno local de desarrollo. |
+
