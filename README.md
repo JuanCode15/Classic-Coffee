@@ -22,4 +22,86 @@ Permite realizar y gestionar reservas, registrar usuarios, recibir sugerencias d
 ---
 
 ## 🧱 Estructura del Proyecto
+Classic-Coffee/
+│
+├── application/
+│ ├── config/ # Configuración general y conexión a la base de datos
+│ ├── controller/ # Controladores PHP
+│ ├── core/ # Clases base del mini framework MVC
+│ ├── model/ # Modelos (consultas SQL)
+│ └── view/ # Vistas (archivos .php con HTML)
+│
+├── public/ # Carpeta pública (inicio del sitio)
+│ ├── css/
+│ ├── js/
+│ ├── img/
+│ └── index.php # Punto de entrada principal
+│
+└── README.md
+
+---
+
+## 🗄️ Estructura de la Base de Datos
+
+Este proyecto utiliza una base de datos MySQL con las siguientes tablas:
+
+- **tiposdocumentos**
+- **roles**
+- **personas**
+- **usuarios**
+- **sugerencias**
+- **reservas**
+
+Puedes importar la estructura completa desde el siguiente script SQL:
+
+```sql
+CREATE TABLE tiposdocumentos (
+  idTipoDocumento INT AUTO_INCREMENT PRIMARY KEY,
+  Descripcion VARCHAR(15) DEFAULT NULL
+);
+
+CREATE TABLE roles (
+  idRol INT AUTO_INCREMENT PRIMARY KEY,
+  Descripcion VARCHAR(20) NOT NULL,
+  Estado TINYINT(1) DEFAULT 1
+);
+
+CREATE TABLE personas (
+  idPersona INT AUTO_INCREMENT PRIMARY KEY,
+  Nombres VARCHAR(100),
+  Apellidos VARCHAR(100),
+  idTipoDocumento INT,
+  NumeroDocumento VARCHAR(30),
+  FOREIGN KEY (idTipoDocumento) REFERENCES tiposdocumentos(idTipoDocumento)
+);
+
+CREATE TABLE usuarios (
+  idUsuario INT AUTO_INCREMENT PRIMARY KEY,
+  Usuario VARCHAR(50),
+  Clave VARCHAR(100),
+  idPersona INT,
+  idRol INT,
+  Estado TINYINT(1) DEFAULT 1,
+  idTipoDocumento INT,
+  FOREIGN KEY (idPersona) REFERENCES personas(idPersona),
+  FOREIGN KEY (idRol) REFERENCES roles(idRol),
+  FOREIGN KEY (idTipoDocumento) REFERENCES tiposdocumentos(idTipoDocumento)
+);
+
+CREATE TABLE sugerencias (
+  idSugerencia INT AUTO_INCREMENT PRIMARY KEY,
+  Descripcion TEXT,
+  Fecha DATE,
+  idUsuario INT,
+  FOREIGN KEY (idUsuario) REFERENCES usuarios(idUsuario)
+);
+
+CREATE TABLE reservas (
+  idReserva INT AUTO_INCREMENT PRIMARY KEY,
+  FechaReserva DATE,
+  Hora TIME,
+  CantidadPersonas INT,
+  idUsuario INT,
+  FOREIGN KEY (idUsuario) REFERENCES usuarios(idUsuario)
+);
 
