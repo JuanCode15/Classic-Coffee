@@ -29,78 +29,99 @@ Puedes importar la estructura completa desde el siguiente script SQL.
 Además se incluye un **usuario demo** para login rápido.
 
 ```sql
--- Crear base de datos para el proyecto
-CREATE DATABASE framework;
+CREATE DATABASE IF NOT EXISTS framework CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE framework;
 
--- Tablas
+CREATE TABLE IF NOT EXISTS tiposdocumentos (
+    idTipoDocumento INT(11) NOT NULL AUTO_INCREMENT,
+    Descripcion VARCHAR(50) NOT NULL,
+    PRIMARY KEY (idTipoDocumento)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE tiposdocumentos (
-  idTipoDocumento INT AUTO_INCREMENT PRIMARY KEY,
-  Descripcion VARCHAR(15) DEFAULT NULL
-);
+INSERT INTO tiposdocumentos (Descripcion) VALUES
+('Cédula de Ciudadanía'),
+('Cédula de Extranjería'),
+('Pasaporte'),
+('NIT'),
+('Tarjeta de Identidad'),
+('Registro Civil');
 
-CREATE TABLE roles (
-  idRol INT AUTO_INCREMENT PRIMARY KEY,
-  Descripcion VARCHAR(20) NOT NULL,
-  Estado TINYINT(1) DEFAULT 1
-);
+CREATE TABLE IF NOT EXISTS roles (
+    idRol INT(11) NOT NULL AUTO_INCREMENT,
+    Descripcion VARCHAR(50) NOT NULL,
+    Estado INT(1) NOT NULL DEFAULT 1,
+    PRIMARY KEY (idRol)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE personas (
-  idPersona INT AUTO_INCREMENT PRIMARY KEY,
-  Nombres VARCHAR(100),
-  Apellidos VARCHAR(100),
-  idTipoDocumento INT,
-  NumeroDocumento VARCHAR(30),
-  FOREIGN KEY (idTipoDocumento) REFERENCES tiposdocumentos(idTipoDocumento)
-);
+INSERT INTO roles (Descripcion, Estado) VALUES
+('Administrador', 1),
+('Cliente', 1),
+('Mesero', 1),
+('Cajero', 1);
 
-CREATE TABLE usuarios (
-  idUsuario INT AUTO_INCREMENT PRIMARY KEY,
-  Usuario VARCHAR(50),
-  Clave VARCHAR(100),
-  idPersona INT,
-  idRol INT,
-  Estado TINYINT(1) DEFAULT 1,
-  idTipoDocumento INT,
-  FOREIGN KEY (idPersona) REFERENCES personas(idPersona),
-  FOREIGN KEY (idRol) REFERENCES roles(idRol),
-  FOREIGN KEY (idTipoDocumento) REFERENCES tiposdocumentos(idTipoDocumento)
-);
+CREATE TABLE IF NOT EXISTS personas (
+    idPersona INT(11) NOT NULL AUTO_INCREMENT,
+    Documento VARCHAR(20) NOT NULL,
+    Nombres VARCHAR(100) NOT NULL,
+    Apellidos VARCHAR(100) NOT NULL,
+    Email VARCHAR(100) NOT NULL,
+    Telefono VARCHAR(20) DEFAULT NULL,
+    Direccion VARCHAR(150) DEFAULT NULL,
+    Genero VARCHAR(10) DEFAULT NULL,
+    FechaNacimiento DATE DEFAULT NULL,
+    idTipoDocumento INT(11) NOT NULL,
+    PRIMARY KEY (idPersona),
+    FOREIGN KEY (idTipoDocumento) REFERENCES tiposdocumentos(idTipoDocumento)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE sugerencias (
-  idSugerencia INT AUTO_INCREMENT PRIMARY KEY,
-  Descripcion TEXT,
-  Fecha DATE,
-  idUsuario INT,
-  FOREIGN KEY (idUsuario) REFERENCES usuarios(idUsuario)
-);
+CREATE TABLE IF NOT EXISTS usuarios (
+    idUsuario INT(11) NOT NULL AUTO_INCREMENT,
+    idPersona INT(11) NOT NULL,
+    Usuario VARCHAR(50) NOT NULL,
+    Clave VARCHAR(255) NOT NULL,
+    idRol INT(11) NOT NULL,
+    Estado INT(1) NOT NULL DEFAULT 1,
+    PRIMARY KEY (idUsuario),
+    FOREIGN KEY (idPersona) REFERENCES personas(idPersona) ON DELETE CASCADE,
+    FOREIGN KEY (idRol) REFERENCES roles(idRol),
+    UNIQUE KEY unique_usuario (Usuario)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE reservas (
-  idReserva INT AUTO_INCREMENT PRIMARY KEY,
-  FechaReserva DATE,
-  Hora TIME,
-  CantidadPersonas INT,
-  idUsuario INT,
-  FOREIGN KEY (idUsuario) REFERENCES usuarios(idUsuario)
-);
+CREATE TABLE IF NOT EXISTS reservas (
+    idReserva INT(11) NOT NULL AUTO_INCREMENT,
+    nomCompleto VARCHAR(150) NOT NULL,
+    Email VARCHAR(100) NOT NULL,
+    fecha DATE NOT NULL,
+    hora TIME NOT NULL,
+    cantidad INT(3) NOT NULL,
+    sede VARCHAR(100) NOT NULL,
+    Mesa VARCHAR(20) NOT NULL,
+    EstadoR INT(1) NOT NULL DEFAULT 1,
+    PRIMARY KEY (idReserva)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Datos demo para login
+CREATE TABLE IF NOT EXISTS sugerencias (
+    id INT(11) NOT NULL AUTO_INCREMENT,
+    yourname VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    message TEXT NOT NULL,
+    fechaRegistro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Tipo de documento
-INSERT INTO tiposdocumentos (idTipoDocumento, Descripcion)
-VALUES (1, 'DNI');
+CREATE TABLE IF NOT EXISTS song (
+    id INT(11) NOT NULL AUTO_INCREMENT,
+    artist VARCHAR(255) NOT NULL,
+    track VARCHAR(255) NOT NULL,
+    link VARCHAR(255) NOT NULL,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Rol administrador
-INSERT INTO roles (idRol, Descripcion, Estado)
-VALUES (1, 'Administrador', 1);
+INSERT INTO personas (Documento, Nombres, Apellidos, Email, Telefono, Direccion, Genero, FechaNacimiento, idTipoDocumento) 
+VALUES ('1234567890', 'Administrador', 'Sistema', 'admin@classiccoffee.com', '3001234567', 'Calle Principal 123', 'Masculino', '1990-01-01', 1);
 
--- Persona asociada al usuario
-INSERT INTO personas (idPersona, Nombres, Apellidos, idTipoDocumento, NumeroDocumento)
-VALUES (1, 'Admin', 'Classic', 1, '00000000');
-
--- Usuario demo (contraseña en texto plano PARA DEMO: 'admin123')
-INSERT INTO usuarios (idUsuario, Usuario, Clave, idPersona, idRol, Estado, idTipoDocumento)
-VALUES (1, 'admin', 'admin123', 1, 1, 1, 1);
+INSERT INTO usuarios (idPersona, Usuario, Clave, idRol, Estado) 
+VALUES (1, 'admin', 'admin123', 1, 1);;
 ```
 
 ---
